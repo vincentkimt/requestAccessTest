@@ -1,0 +1,80 @@
+<aura:component controller="NoOfcontactsToDisplay" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global">
+    <aura:attribute name="wrapperList" type="Object"></aura:attribute>
+    <aura:attribute name="recordId" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"></aura:handler>
+    <aura:attribute name="selectedRowsCount" type="Integer" default="0"></aura:attribute>
+    <aura:attribute name='showModal' type='Boolean' default="false"></aura:attribute>
+    <aura:attribute name="maxRowSelection" type="Integer" default="100"></aura:attribute>
+    <aura:attribute name="contactList" type="Contact[]"></aura:attribute>
+    
+    <aura:attribute name="coloumns" type="List"/>
+    <table class="slds-table slds-table--bordered slds-table--striped">
+        <thead>
+            <tr>
+                <th>No of Contacts of this Account</th>
+                <th>No of Contacts Without Account</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{!v.wrapperList.countOfAccContact}</td>
+                <td>{!v.wrapperList.countOfContact}</td>
+            </tr>
+            
+        </tbody>
+        
+    </table>
+    <br/>
+    <aura:if isTrue="{!v.showModal}">
+        <div aura:id="editDialog" role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open slds-modal_small slds-backdrop ">
+            <div class="slds-modal__container ">
+                <div class="slds-modal__header">
+                    
+                    <h2 class="slds-text-heading--medium">Update Contact Records</h2>
+                    <button class="slds-button slds-modal__close slds-button--icon" title="Close" onclick="{!c.closeModal}">
+                        <lightning:icon iconName="utility:close" size="medium" />
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                </div>
+                <div class="slds-modal__content slds-p-around--large slds-grid slds-wrap " style="height:400px;" >
+                   <h1>Selected Count- {!v.selectedRowsCount}</h1>
+
+                    <table class = "slds-table slds-table_cell-buffer slds-table_fixed-layout slds-max-medium-table_stacked-horizontal slds-table_bordered" >
+                        <tbody> <tr>
+                            <td>
+                                            <lightning:datatable
+													 columns="{!v.coloumns}"
+                                                     data="{!v.wrapperList.contactsList}"
+                                                     keyField="Id"
+                                                     maxRowSelection="{!v.maxRowSelection}"
+                                                     onrowselection="{!c.handleSelection}"
+								/>
+						</td>
+                            <td>
+                    <aura:if isTrue="{!v.selectedRowsCount}">
+                       <lightning:datatable
+													 columns="{!v.coloumns}"
+                                                     data="{!v.contactList}"
+                                                     keyField="Id"
+                                                     hideCheckboxColumn="true"
+								/>
+                        </aura:if>
+                            </td>
+                           </tr>
+                            <tr>
+                                <td>
+                                <aura:if isTrue="{!v.selectedRowsCount}">
+            					<lightning:button label="Update Contacts" onclick="{!c.UpdateContacts}"></lightning:button>    
+        						</aura:if>
+                                </td>
+                            </tr>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+             
+        </div>
+        
+    </aura:if>
+    <lightning:button label="Map Contacts" onclick="{!c.showModal}"></lightning:button>    
+</aura:component>

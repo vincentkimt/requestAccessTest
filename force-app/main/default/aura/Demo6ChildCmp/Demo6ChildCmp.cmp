@@ -1,0 +1,11 @@
+<aura:component >
+	child component say HI
+    
+    <aura:attribute name="childAttr" type="String" default="Child Default"/>
+    <br/> ---------- Child Start----------<br/>
+    Child Attr value={!v.childAttr}
+    <br/>
+    <ui:button label="updateCild" press="{!c.updateChild}" />
+        <br/> ---------- Child End----------<br/>
+    <aura:method name="callChild" action="{!c.callChildMethod}"/>
+</aura:component>

@@ -1,0 +1,39 @@
+<template>
+    <div class="slds-var-m-around_large">
+
+        <template for:each={result} for:item="account">
+
+            <p key={account.Id}>
+                {account.Id}
+            </p>
+        </template>
+    </div>
+
+    <div>
+    <lightning-button label="Get Accounts" onclick={handleGetAccount}></lightning-button>
+    
+   
+           
+                    <template  for:each={accountList} for:item="account">
+                        <div key={account.id} class="slds-grid slds-wrap">
+                            <div>
+                            <lightning-card  variant="Narrow"  title={account.Name} icon-name="standard:account">
+                                
+                                <div class="slds-var-p-horizontal_small">
+                                    Industry : {account.Industry}<br/>
+                                    Rating : {account.Rating}<br/>
+                                    Website : {account.Website}<br/>
+                                    Revenue : {account.AnnualRevenue}
+                                </div>
+                            </lightning-card>
+                        
+
+                            </div>
+                        </div>
+                    </template>
+            </div>
+                
+            
+    
+</div>
+</template>

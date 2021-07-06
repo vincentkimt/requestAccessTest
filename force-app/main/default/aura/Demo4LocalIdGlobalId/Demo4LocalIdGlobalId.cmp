@@ -1,0 +1,14 @@
+<aura:component >
+	<H2>Example 1 - get local and global ID</H2>
+    <lightning:input type="String" name="input1" label="Enter something" aura:id="inputLocalId" />
+    <lightning:button variant="base" label="Show ID" title="Base action" onclick="{! c.showId }"/>
+    <H2>Example 2 - same localID to multiple component</H2>
+    <lightning:input type="String" name="input2" label="Please Enter something" aura:id="LocalId" />
+    <lightning:input type="String" name="input3" label="Must Enter something" aura:id="LocalId" />
+    <lightning:input type="String" name="input4" label="kindly Enter something" aura:id="LocalId" />
+    <lightning:input type="String" name="input5" label="should Enter something" aura:id="LocalId" />
+    <lightning:input type="String" name="input6" label="hey, Enter something" aura:id="LocalId" />
+    <lightning:button variant="base" label="Show ID" title="Base action" 
+                     
+                     onclick="{!c.showMultipleId}"/>
+</aura:component>

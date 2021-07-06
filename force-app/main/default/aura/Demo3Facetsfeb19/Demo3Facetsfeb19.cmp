@@ -1,0 +1,10 @@
+<aura:component >
+
+    <aura:attribute name="myFacet" type="Aura.Component[]" />
+    <div>
+        {!v.myFacet}<br/>
+        	{!v.body}
+        
+    </div>
+        
+</aura:component>

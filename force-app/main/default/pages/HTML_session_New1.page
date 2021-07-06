@@ -1,0 +1,34 @@
+<apex:page showHeader="false" standardStylesheets="false">
+  <!-- Begin Default Content REMOVE THIS -->
+  <!--<apex:stylesheet value="{!$Resource.externalCSS}"/>-->
+  <apex:stylesheet value="{!URLFOR($Resource.ext, 'ext1.css')}"/>
+  <style>
+      #blueBox{
+      color: blue;      
+        }
+  </style>
+  
+  <div  id="blueBox" >
+  <h1>Congratulations</h1>
+  This is your new Page
+  </div>
+   <div  id="external" >
+  <h1>I am externalcss</h1>
+  </div>
+  <div style="color : green">
+  
+  <p> Hello World</p>
+  <h6> Yet another div just for inline css</h6>
+  </div>
+  <p> abc </p>
+  <!-- Below is used when we just want to use a single file -->
+  <img src="{!$Resource.AppirioLogo}" />
+  
+  <!-- Below is used when we want to use a file stored inside a zip folder. we access it with a name -->
+  <img width="500" src="{!URLFOR($Resource.ZipLogo, 'Wipro_Logo_1.png')}" />
+  
+  <!-- we have another visualforce page, this page can be redirected using below method. -->
+  <a _blank = "true" href="/apex/RedirectedPage" >dsfds</a>
+  
+  <!-- End Default Content REMOVE THIS -->
+</apex:page>

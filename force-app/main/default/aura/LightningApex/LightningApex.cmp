@@ -1,0 +1,10 @@
+<aura:component controller ="LightningApexController" implements="force:appHostable">
+    <aura:attribute name="accts" type="Account[]"/>
+    <!-- Display account records -->
+    <lightning:button variant ="brand" label ="Display Data" onclick="{!c.handleClick}" />
+    
+    <aura:iteration items="{!v.accts}" var="a">
+    
+    <p>{!a.Name}, {!a.Type}</p>
+    </aura:iteration>
+</aura:component>

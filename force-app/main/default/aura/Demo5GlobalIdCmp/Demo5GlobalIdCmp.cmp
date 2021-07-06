@@ -1,0 +1,4 @@
+<aura:component >
+    <aura:attribute name="btnLabel" type="String" />
+    <button Id="{!globalId + '_footer'}" onclick="{!c.testGlobal}" >{!v.btnLabel}</button>
+</aura:component>

@@ -1,0 +1,72 @@
+<aura:component >
+    <aura:attribute name="myString" type="String" default="StringDefaultValue" />
+     <aura:attribute name="jsObject" type="Object" />
+    <aura:attribute name="accountObject" type="Account" 
+                    default="{'sobjectType':'Account',
+                             'name':'Test Account Object'}" />
+    <aura:attribute name="stringArray" type="String[]"
+                    default="['name','value','email']" />
+        <aura:attribute name="listVariable" type="List"
+                    default="['listval1','listval2','listval3']" />
+    <aura:attribute name="mapVariable" type="Map"
+                    default="{'a':'mapval1','b':'mapval2','c':'mapval3'}" />
+     <aura:attribute name="setVariable" type="Set"
+                    default="['setval1','setval2','setval3']" />
+    <aura:attribute name="customType" type="WrapperTest" />
+    <aura:handler name="init" value = "{!this}" action="{!c.doInit}"/>
+    
+    <table border="1">
+    	<tr>
+            <td>Attribute Name</td>
+        	<td>Data Type</td>
+       		<td>Value</td>
+        </tr>
+        <tr>
+        	<td>myString</td>
+        	<td>String</td>
+        	<td>{!v.myString}</td>
+        	
+        
+        </tr>
+        <tr>
+        	<td>{!v.jsObject.name}</td>
+            <td>{!v.jsObject.email}</td>
+        </tr>
+        <tr>
+            <td>New Vals</td>
+        	<td>{!v.accountObject.name}</td>
+            <td>{!v.accountObject.email}</td>
+
+        </tr>
+        <tr>
+            <td>List Vals</td>
+        	<td>{!v.listVariable[1]}</td>
+            <td>{!v.listVariable[2]}</td>
+
+        </tr>
+          <tr>
+            <td>Map vals</td>
+        	<td>{!v.mapVariable.length}</td>
+            <td>{!v.mapVariable.a}</td>
+			<td>{!v.mapVariable.b}</td>
+            <td>{!v.mapVariable.c}</td>
+        </tr>
+        <tr>
+            <td>Set vals</td>
+        	<td>{!v.setVariable.length}</td>
+            <td>|||||||||||||||||||||||||||||||||</td>
+        <td>
+            <aura:iteration items="{!v.setVariable}" var="setVar">
+            {!setVar}
+      	  </aura:iteration>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>Data in Custom Type</td>
+        	<td>{!v.customType.myString}</td>
+        	<td>{!v.customType.myEmail}</td>
+        </tr>
+        
+    </table>
+</aura:component>

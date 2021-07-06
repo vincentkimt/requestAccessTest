@@ -1,0 +1,15 @@
+<aura:component >
+	 <lightning:input type="String" name="input1" label="Enter a input1" aura:id="localIdDemo" />
+ 	 <lightning:input type="String" name="input2" label="Enter a input2" aura:id="localIdDemo" />
+    <lightning:input type="String" name="input3" label="Enter a input3" aura:id="localIdDemo" />
+    <lightning:input type="String" name="input4" label="Enter a input4" aura:id="localIdDemo" />
+    <lightning:input type="String" name="input5" label="Enter a input5" aura:id="localIdDemo" />
+   <lightning:button variant="base" label="button1" title="base action" onclick="{!c.showId}" />
+    
+   <lightning:button variant="base" label="button1" title="base action" onclick="{!c.showMultipleId}" />
+    
+   
+        <c:Demo5GlobalIdCmp btnLabel="Button2"/>
+
+    
+</aura:component>

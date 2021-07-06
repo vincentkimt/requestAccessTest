@@ -1,0 +1,13 @@
+<aura:component >
+    <aura:attribute type="String"  name="parentAttribute" default="Parent Attribute" />
+    <aura:handler name="change" value="{!v.parentAttribute}" action="{!c.parentChangeHandler}"/>
+    <hr/>
+    <H2>Example of UnBounded Expression</H2>
+        <c:Demo7ChildComponent childAttribute="{#v.parentAttribute}" />
+
+Parent Attribute : {!v.parentAttribute}
+    
+    <lightning:button variant="base" label="update Parent" title="Base action" 
+                     
+                     onclick="{!c.updateParent}" aura:id="LocalID"/>
+</aura:component>

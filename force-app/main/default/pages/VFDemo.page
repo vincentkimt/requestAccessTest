@@ -1,0 +1,22 @@
+<apex:page standardController="Account"><!-- Give object API Name, All Functionality related to Account Obj get included automatically. for example creating an account record.-->
+<apex:form >
+	<table border='1'>
+        <tr>
+        	<td>Account Name</td>
+            <td><apex:inputField value="{!Account.Name}"/> </td>
+        </tr>
+        <tr>
+        	<td>Rating</td>
+            <td><apex:inputField value="{!Account.Rating}"/></td>
+        </tr>
+        
+        <tr>
+       	
+        	<td><apex:commandButton value="Save" action="{!save}"/></td>
+            <td><apex:commandButton value="Cancel" action="{!cancel}" /></td>
+        </tr>
+        
+    </table>    
+    
+</apex:form>
+</apex:page>

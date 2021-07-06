@@ -1,0 +1,111 @@
+<aura:component >
+	<aura:attribute type="String" name="label" default="String variable"/>
+    <aura:attribute type="Object" name="jsObject" />
+    <aura:attribute type="Account" name ="newAccount"
+                    default="{'sobjectType':'Account',
+                             'Name' : 'Demo Account',
+                             'Active__c' : 'Yes'}" />
+    <aura:attribute type="String[]" name="StringArray" default="['value1','value2','value3']" />
+    <aura:attribute type="List" name="listValues" default="['value1','value2','value3']" />
+    <aura:attribute type="Map" name="mapValues" default="{a : 'value1',b : 'value2',c : 'value3'}" />
+    <aura:attribute type="Set" name="setValues" default="['value1','value2','value3','value3','value3']" />
+    <aura:attribute type="WrapperTestFeb19" name="userData" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <div>
+    	<table>
+        	<tr>
+                <th>
+                	Atrribute type
+                </th>
+
+                <th>
+                	Attribute name
+                </th>
+                
+                <th>
+                    Value
+                </th>
+             </tr>
+            <tr>
+                <td>
+                	String
+                </td>
+                 <td>
+                	label
+                </td>
+                <td>{!v.label}</td>
+            </tr>
+            <tr>
+                <td>
+                	JS Object
+                </td>
+                 <td>
+                	jsObject
+                </td>
+                <td>{!v.jsObject.name}</td>
+            </tr>
+            <tr>
+                <td>
+                	JS Object
+                </td>
+                 <td>
+                	jsObject
+                </td>
+                <td>{!v.jsObject.email}</td>
+            </tr>
+            <tr>
+                <td>
+                	sObject
+                </td>
+                 <td>
+                	newAccount
+                </td>
+                <td>{!v.newAccount.Name}</td>
+            </tr>
+            <tr>
+                <td>
+                	StringArray
+                </td>
+                 <td>
+                	StringArray
+                </td>
+                <td>{!v.StringArray[2]}</td>
+            </tr>
+            <tr>
+                <td>
+                	list of string type
+                </td>
+                 <td>
+                	listValues
+                </td>
+                <td>{!v.listValues[2]}</td>
+            </tr>
+            <tr>
+                <td>
+                	map of string type
+                </td>
+                 <td>
+                	mapValues
+                </td>
+                <td>{!v.mapValues.a}</td>
+            </tr>
+            <tr>
+                <td>
+                	set of string type
+                </td>
+                 <td>
+                	setValues
+                </td>
+                <td>{!v.setValues.length}</td>
+            </tr>
+            <tr>
+                <td>
+					Wrapper class name : wrappertestfeb19.apxc                </td>
+                 <td>
+                	var1
+                </td>
+                <td>{!v.userData.var1}</td>
+            </tr>
+        </table>
+    </div>
+</aura:component>

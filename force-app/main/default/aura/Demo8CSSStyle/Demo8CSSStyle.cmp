@@ -1,0 +1,11 @@
+<aura:component >
+    <div class="yellow" >I am div in white
+    <ul class="blue">
+        <li class="Red">Red inside ul</li>
+        <li class="green">Green</li>
+        <li class="pink">Pink</li>
+        <li>not </li>
+    </ul>
+          </div>      
+                
+</aura:component>

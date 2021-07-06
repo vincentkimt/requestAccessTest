@@ -1,0 +1,16 @@
+<aura:component >
+    <aura:attribute type="String"  name="childAttribute" default="Child Attribute" />
+     <aura:handler name="change" value="{!v.childAttribute}" action="{!c.childChangeHandler}"/>
+   
+    -------------------------------------------------------------------------------------
+   
+
+	 
+	<h2>child attr value: </h2>
+	<h2> {!v.childAttribute}</h2>    
+        <lightning:button variant="base" label="update Child" title="Base action" 
+                     
+                     onclick="{!c.updateChild}" aura:id="LocalID"/>
+    <br/>
+
+</aura:component>

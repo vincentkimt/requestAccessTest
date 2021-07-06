@@ -1,0 +1,3 @@
+<aura:component extends="c:Demo4FacetsParentfeb19">
+	  {!v.body}
+</aura:component>

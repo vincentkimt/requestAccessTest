@@ -1,0 +1,10 @@
+<aura:component >
+	UnBounded component say HI
+        <aura:attribute name="parentAttr" type="String" default="Parent Default" />
+    <br/>
+    Parent Attribute Value={!v.parentAttr}
+    <br/>
+        <c:Demo6ChildCmp childAttr="{#v.parentAttr}" />
+
+    <ui:Button label="update UnBounded Parent" press="{!c.updateParent}" />
+</aura:component>

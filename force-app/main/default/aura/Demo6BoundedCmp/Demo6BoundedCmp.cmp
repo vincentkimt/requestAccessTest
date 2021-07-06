@@ -1,0 +1,12 @@
+<aura:component >
+	Bounded component say HI
+    
+    <aura:attribute name="parentAttr" type="String" default="Parent Default" />
+    <br/>
+    Parent Attribute Value={!v.parentAttr}
+    <br/>
+    <c:Demo6ChildCmp childAttr="{!v.parentAttr}" />
+    <ui:Button label="update Bounded Parent" press="{!c.updateParent}" />
+    
+    
+</aura:component>

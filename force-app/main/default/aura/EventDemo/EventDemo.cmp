@@ -1,0 +1,11 @@
+<aura:component>
+<aura:attribute name="txtFromEvent" type="String"/>
+<div class="slds">
+    In Lightning parent component : 
+    <p>
+        Data from LWC - {!v.txtFromEvent}
+    </p>
+    <c:lWC_EventRaise ontxtChange="{!c.lwcEventHandler}"/>
+
+</div>
+</aura:component>	

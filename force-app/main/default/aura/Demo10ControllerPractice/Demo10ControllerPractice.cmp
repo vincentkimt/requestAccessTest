@@ -1,0 +1,31 @@
+<aura:component controller='Demo10LightningController'>
+    <aura:attribute type='List' name='accountList' />
+    <aura:attribute type='List' name='contactList' />
+    
+    <aura:attribute name='label' type='String' default='Hi default value' />
+    Label : {!v.label}<br/>
+    <ui:inputText aura:id="userInput" />
+    <ui:button label="Show" press="{!c.myFunc}" />
+    
+    <aura:attribute name='selectedAccountId' type='String' />
+  
+    <aura:handler value='{!this}' name='init' action='{!c.doInit}' />
+    <aura:handler name="change" value="{!v.selectedAccountId}" action="{!c.getContactForAccount}" />
+     <lightning:select name="select1" label="Account List" required="true" value="{!v.selectedAccountId}">
+       <aura:iteration items="{!v.accountList}" var="acc">
+         <option text="{!acc.Name}" value="{!acc.Id}"></option>
+       </aura:iteration>
+    </lightning:select>
+    <hr/>
+    <hr/><hr/><hr/>
+   
+<h1>Contact should appear here:::</h1>
+    <aura:iteration items="{!v.contactList}" var="con" >
+        {!con.Name}:::::::::::::::::{!con.Id}<br/>
+    </aura:iteration>
+    
+    
+    
+    <hr/>
+    <hr/><hr/><hr/>
+</aura:component>

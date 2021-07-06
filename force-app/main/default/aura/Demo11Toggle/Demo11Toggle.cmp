@@ -1,0 +1,33 @@
+<aura:component >
+	<aura:attribute type="boolean" name = "flag" default="false"> </aura:attribute>	
+    <aura:attribute type="String" name="editText" default="You cannot edit me"> </aura:attribute>	
+    
+     <aura:if isTrue="{!v.flag}">
+    <ui:inputText value="{!v.editText}"></ui:inputText>
+    <aura:set attribute="else">
+      {!v.editText}
+    </aura:set>
+  </aura:if>
+    
+       <ui:button label="Edit" press="{!c.doEdit}" />
+    <hr/>
+--------------------------------------------------------------------------------
+    <hr/>
+    <ui:button label="Toggle" press="{!c.toggle}"></ui:button>
+    -------------------------------------------
+    <hr/>
+    <p aura:id="idOfPara">This is a toggle text,This is a toggle text,This is a toggle text,This is a toggle text.</p>
+    ========
+    ================
+    <hr/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <aura:handler name="render" value="{!this}" action="{!c.onRender}" />
+    
+    <aura:attribute type="String" name="textAttr" default="a text attribute"> </aura:attribute>	
+	========={!v.textAttr}=========
+    <ui:button label="renderFunctionality" press="{!c.changeValue}"></ui:button>
+ 	<hr/>
+      <c:Demo13RenderChild aura:id="childcomponent"/>
+    <ui:button label = "destroy child" press="{!c.destroyChild}"/>
+</aura:component>

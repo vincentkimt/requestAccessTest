@@ -1,0 +1,31 @@
+<apex:page controller="VFDemo5Controller">
+    <apex:pageMessages ></apex:pageMessages>
+    <apex:form >
+        <table>
+            <tr>
+                <td>
+                    <apex:inputField value="{!acc.Name}"/>            
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <apex:inputField value="{!acc.Rating}"/>    
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <apex:commandButton value="Save" action="{!Save}"/> 
+                    
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <apex:commandButton value="Cancel" />
+                </td>
+            </tr>
+            
+            
+        </table>
+        
+    </apex:form>
+</apex:page>

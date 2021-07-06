@@ -1,0 +1,11 @@
+<aura:component implements="force:appHostable">
+
+    <aura:registerEvent name="loadMyEvent" type="c:Result"/>
+    <p>Hello from cmp 1</p>
+    
+    <br/>
+    <ui:inputNumber aura:id="Input1" label="first value" required = "true" />
+    <ui:inputNumber aura:id="Input2" label="second value" required="true"/>
+    <ui:button label="sum" press="{!c.Add}"/>
+    <br/>
+</aura:component>

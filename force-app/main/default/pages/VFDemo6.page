@@ -1,0 +1,62 @@
+<apex:page standardController="Account" extensions="VFDemo6Extension">
+    <apex:form >
+        <apex:pageBlock title="My Title">
+            <apex:pageBlockButtons >
+                
+                <apex:commandButton value="Save" action="{!Save}"/>
+                <apex:commandButton value="Cancel" action="{!Cancel}"/>
+            </apex:pageBlockButtons>
+            
+            <apex:pageBlockSection >
+                
+                <apex:pageBlockSectionItem >
+                    Name <apex:inputField value="{!Account.Name}"/>
+                    
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    Rating <apex:inputField value="{!Account.Rating}"/>
+                    
+                </apex:pageBlockSectionItem>
+                
+                
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        
+        <apex:pageBlock title="TOP 10 Accounts List">
+            <apex:pageBlockTable value="{!listAccount}" var="item">
+                <apex:column value="{!item.Id}"/>
+                <apex:column value="{!item.Name}"/>
+                <apex:column value="{!item.Rating}"/>
+                
+            </apex:pageBlockTable>
+            
+            
+        </apex:pageBlock>
+        <apex:commandButton immediate="true" value="See in Bordered Table" action="{!showBanner}"/>
+
+       
+        <apex:outputPanel rendered="{!displayBanner}">
+             <table border ="1" >
+            <tr><th>Id</th>
+                <th>Name</th>
+                <th>Rating</th>
+            </tr>
+            <apex:repeat value="{!listAccount}" var="item" >
+                <tr>
+                    <td>{!item.Name}</td> 
+                    <td>{!item.Id}</td>    
+                    <td>{!item.Rating}</td>    
+                    
+                </tr>
+                
+            </apex:repeat>
+        </table>
+        </apex:outputPanel> 
+        <apex:outputPanel >
+        	Panel 1
+        </apex:outputPanel>
+        <apex:outputPanel >
+        	Panel 2
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

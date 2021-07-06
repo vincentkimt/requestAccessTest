@@ -1,0 +1,144 @@
+<apex:page controller="VFDemo8Controller">
+    <script>
+    function getDetails(){
+        
+        getAccountDetails();
+    }
+    
+    
+    </script>
+    <apex:form style="align:center">
+        <apex:actionFunction name="getAccountDetails" action="{!fetchSelectedAccount}" rerender="accDetails,contactDetails,contactDetailsWrapper"/>
+        <apex:actionFunction name="fetchContactDetails" action="{!fetchContactDetails}" rerender="contactEditRecord">
+            <apex:param name="param1" value="" assignTo="{!selectedContactId}"/>
+        </apex:actionFunction>
+        
+        <apex:selectList size="1" value="{!selectedAccountId}" onchange="getDetails();">
+            <apex:selectOptions value="{!accountList}">
+                
+                
+            </apex:selectOptions>
+        </apex:selectList>
+        
+        <apex:outputPanel id="accDetails">
+            <apex:outputPanel rendered="{!selectedAccount.Id != NULL}">
+                <table>
+                    
+                    <tr>
+                        <td>Name  :  </td>
+                        <td>{!selectedAccount.Name}</td>
+                        
+                    </tr>
+                    <tr>
+                        <td>Id  :  </td>
+                        <td>{!selectedAccount.Id}</td>
+                    </tr>
+                    <tr>
+                        <td>OwnerID  :  </td>
+                        <td>{!selectedAccount.ownerId}</td>
+                    </tr>
+                    <tr>
+                        <td>Rating  :  </td>
+                        <td>{!selectedAccount.Rating}</td>
+                    </tr>
+                </table>          
+            </apex:outputPanel>
+        </apex:outputPanel>
+        <apex:outputPanel id="contactDetails" >
+            <apex:outputPanel rendered="{!selectedAccount.Id != NULL}">
+                <table>
+                    <tr>
+                        <th>Contact attribute : </th>
+                        <th>Details</th>
+                    </tr>
+                    <tr>
+                        <td>Id: </td> 
+                        <td>Name: </td>    
+                        <td>Email: </td>    
+                        
+                    </tr>
+                    <apex:repeat value="{!listContact}" var="item" >
+                        
+                        <tr>
+                            <td>{!item.Id}</td> 
+                            <td>{!item.Name}</td>    
+                            <td>{!item.Email}</td>    
+                            <td> <a href="javascript:void(0);" onclick="fetchContactDetails('{!item.Id}')">Edit</a> </td>
+                        </tr>
+                        
+                    </apex:repeat>
+                </table>
+            </apex:outputPanel>
+        </apex:outputPanel>
+        --------------------Wrapper Start--------------------
+        <apex:outputPanel id="contactDetailsWrapper" >
+            <apex:outputPanel rendered="{!wrapperList.size > 0}">
+                <table>
+                    <tr>
+                        <th>Contact attribute : </th>
+                        <th>Details</th>
+                    </tr>
+                    <tr>
+                        <td>Edit checkbox</td>
+                        <td>Id: </td> 
+                        <td>Name: </td>    
+                        <td>Email: </td>    
+                        
+                    </tr>
+                        <apex:repeat value="{!wrapperList}" var="item" >
+                            
+                            <tr>
+                                <td><apex:inputCheckbox value="{!item.isSelected}" /> </td>
+                                <td>{!item.conRecord.Id}</td> 
+                                <td><br/></td>
+                                <td>
+                                    <apex:inputfield value="{!item.conRecord.FirstName}" rendered="{!item.isSelected}"/>
+                                    <apex:outputfield value="{!item.conRecord.FirstName}" rendered="{!!item.isSelected}"/>
+                                </td>
+                                <td><br/></td>
+                                <td> 
+                                    <apex:inputField value="{!item.conRecord.LastName}" rendered="{!item.isSelected}"/>  
+                                    <apex:outputField value="{!item.conRecord.LastName}" rendered="{!!item.isSelected}"/>  
+                                </td>  <br/>            
+                                <td><br/></td>
+                                <td>
+                                    <apex:inputfield value="{!item.conRecord.Email}" rendered="{!item.isSelected}"/>
+                                    <apex:outputField value="{!item.conRecord.Email}" rendered="{!!item.isSelected}" />
+                                </td>
+                                
+                            </tr>
+                            
+                        </apex:repeat>
+                    <tr>
+                        <td>
+                            <apex:commandButton value="edit" action="{!editWrapper}" rerender="contactDetailsWrapper"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> 
+                            <apex:commandButton value="Save" action="{!saveWrapper}" rerender="contactDetailsWrapper,contactDetails"/>
+                        </td>
+                    </tr>
+                </table>
+            </apex:outputPanel>
+        </apex:outputPanel>
+        -------------------Wrapper End--------------------
+        <apex:outputPanel id="contactEditRecord">
+            <apex:outputPanel rendered="{!selectedContact.Id != NULL}">
+                <table>
+                    <tr><td>First Name</td>
+                        <td><apex:inputField value="{!selectedContact.FirstName}"></apex:inputField></td>
+                    </tr>
+                    <tr><td>Last Name</td>
+                        <td><apex:inputField value="{!selectedContact.LastName}"></apex:inputField></td>
+                    </tr>
+                    <tr><td>BirthDate</td>
+                        <td><apex:inputField value="{!selectedContact.BirthDate}"></apex:inputField></td>
+                    </tr>
+                    <tr><td><apex:commandButton value="Save" action="{!saveContactDetails}" rerender="contactDetails,contactEditRecord"/></td></tr>
+                    
+                </table>
+            </apex:outputPanel>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

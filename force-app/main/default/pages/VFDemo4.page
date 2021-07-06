@@ -1,0 +1,10 @@
+<apex:page >
+   <apex:form >
+       <table border='1'>
+           <tr>
+               <td><a href="/apex/LoginUtility">Page 1</a> </td>
+               <td><a  href="/apex/page1">Page2</a> </td>
+           </tr>
+       </table>
+   </apex:form>
+</apex:page>

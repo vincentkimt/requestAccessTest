@@ -1,0 +1,448 @@
+<aura:component controller="LibrarySystemController"
+    implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:appHostable"
+    access="global">
+
+    <!--Declaring the attributes used in the component-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"></aura:handler>
+    <aura:attribute name="selectedRowsCount" type="Integer" default="0"></aura:attribute>
+    <aura:attribute name='showModal' type='Boolean' default="false"></aura:attribute>
+    <aura:attribute name='itemsFound' type='Boolean'></aura:attribute>
+    <aura:attribute name='itemsFoundinAvailable' type='Boolean'></aura:attribute>
+    <aura:attribute name='showListView' type='Boolean' default="false"></aura:attribute>
+    <aura:attribute name='showEmployeeSearchForHistory' type='Boolean' default="false"></aura:attribute>
+    <aura:attribute name="wrapperObject" type="Object"></aura:attribute>
+    <aura:attribute name="selectedItemsList" type="Library_Item__c[]"></aura:attribute>
+    <aura:attribute name="maxRowSelection" type="Integer" default="100"></aura:attribute>
+    <aura:attribute name="showEmployeeSearch" type='Boolean' default="false"></aura:attribute>
+    <aura:attribute name="employeeList" type="Employee__c[]"></aura:attribute>
+    <aura:attribute name="employeeListForHistory" type="Employee__c[]"></aura:attribute>
+    <aura:attribute name='employeeListForHistoryshowbutton' type='Boolean' default="false"></aura:attribute>
+    <aura:attribute name='employeeIdForHistoy' type='String'></aura:attribute>
+    <aura:attribute name="coloumns" type="List" />
+    <aura:attribute name="coloumnsEmployeeHistory" type="List" />
+    <aura:attribute name="coloumnsLibraryHistory" type="List" />
+    <aura:attribute name="coloumnsEmployee" type="List" />
+    <aura:attribute name='showEmployeeHistory' type='Boolean' default="false"></aura:attribute>
+    <aura:attribute name='showListViewEmployee' type='Boolean' default="false"></aura:attribute>
+    <aura:attribute name="historyOfSelectedEmployee" type="Employee_Borrowing_History__c[]"></aura:attribute>
+    <aura:attribute name="showLibraryItemForHistoryFound" type='Boolean' default="false"></aura:attribute>
+    <aura:attribute name="showBorrowingHistory" type='Boolean' default="false"></aura:attribute>
+    <aura:attribute name="libraryHistoryList" type="Employee_Borrowing_History__c[]"></aura:attribute>
+    <aura:attribute name="borrowedItemExist" type='Boolean' default="false"></aura:attribute>
+    <aura:attribute name="showReturnBook" type='Boolean' default="false"></aura:attribute>
+    <aura:attribute name="showIssueitemButtonOnModal" type='Boolean' default="false"></aura:attribute>
+    <aura:attribute name="showNoItemFound" type='Boolean' default="false"></aura:attribute>
+    <aura:attribute name="showNoEmployeeHistoryFound" type='Boolean' default="false"></aura:attribute>
+    <aura:attribute name="showEmployeeSearchResult" type='Boolean' default="false"></aura:attribute>
+    <aura:attribute name="showErrorIfNoEmployeeSelected" type='Boolean' default="false"></aura:attribute>
+    <aura:attribute name="listItemsToSearch" type="String[]"></aura:attribute>
+    <aura:attribute name="showErrorIfEmployeeLimitReached" type='Boolean' default="false"></aura:attribute>
+    <aura:attribute name="showErrorIfQuantityNotIssueable" type='Boolean' default="false"></aura:attribute>
+    <aura:attribute name="errorIfItemNotIssueable" type='String'></aura:attribute>
+    <aura:attribute name="bulkItemError" type='Boolean' default="false"></aura:attribute>
+    <aura:attribute name="bulkItemErrorMsg" type='String'></aura:attribute>
+
+    <table style="table-layout: fixed">
+        <thead>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="row">
+                        <h2 class="header">Search For an Item</h2>
+                        <!--controller call for adding every scanned item from barcode scanner-->
+                        <lightning:layoutItem size="5">
+                            <span onkeypress="{!c.addSearchTerms}" class="slds-size--11-of-12">
+                                <lightning:input aura:id="LibraryItemName" name="searchTerm"
+                                    label="Enter Name of Library Item" />
+                            </span>
+                        </lightning:layoutItem>
+                        <br />
+                        <lightning:button label="Search Item" onclick="{!c.searchItem}"></lightning:button>
+                    </div>
+                </td>
+                <!--Buttons for additional functinality-->
+                <td style="align:right">
+
+                    <lightning:button variant="brand" label="Browse Library Items" title="Browse Library Items"
+                        onclick="{! c.handleBrowseItems }" />
+                    <lightning:button variant="brand" label="See Employee History" title="See Employee History"
+                        onclick="{! c.handleEmployeeHistoryModal }" />
+                    <lightning:button variant="brand" label="See Borrowing History" title="See Borrowing History"
+                        onclick="{! c.handleBorrowingHistoryModal }" />
+
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <!--This shows the scanned items-->
+                    <aura:iteration items="{!v.listItemsToSearch}" var="items">
+                        {!items}<br />
+                    </aura:iteration>
+                </td>
+                <td>
+                    <!--Error message if no items are found-->
+                    <aura:if isTrue="{!v.showNoItemFound}">
+                        <div class="slds-text-color_error slds-text-align_left">No Items Found</div>
+
+                    </aura:if>
+                </td>
+            </tr>
+            <!--This table shows the result of scanned item search-->
+            <table border="1" style="table-layout: fixed">
+                <thead></thead>
+                <tbody>
+                    <tr>
+                        <aura:if isTrue="{!v.itemsFound}">
+                            <th>All Items</th>
+                        </aura:if>
+                    </tr>
+                    <tr>
+                        <aura:if isTrue="{!v.itemsFound}">
+
+                            <td>
+                                <!--Showing the list of all library items-->
+                                <div>
+                                    <lightning:datatable columns="{!v.coloumns}"
+                                        data="{!v.wrapperObject.listOfLibraryItems}" keyField="Id"
+                                        hideCheckboxColumn="true" />
+
+                                </div>
+
+                            </td>
+                        </aura:if>
+
+
+                    </tr>
+                </tbody>
+            </table>
+            <tr>
+                <td>
+                    <aura:if isTrue="{!v.itemsFoundinAvailable}">
+                        <br />
+                        <lightning:button label="Issue Items" onclick="{!c.showModalMethod}"></lightning:button>
+
+                    </aura:if>
+                    <br />
+                    <br />
+                    <aura:if isTrue="{!v.borrowedItemExist}">
+
+                        <lightning:button variant="brand" label="Return Items" title="Return Items"
+                            onclick="{! c.handleReturnBookModal }" />
+                    </aura:if>
+                </td>
+            </tr>
+            <!--This Modal shows the items in the available list. It enables the items to be issued-->
+            <aura:if isTrue="{!v.showModal}">
+                <div aura:id="editDialog" role="dialog" tabindex="-1" aria-labelledby="header43"
+                    class="slds-modal slds-fade-in-open slds-modal_large slds-backdrop ">
+                    <div class="slds-modal__container ">
+                        <div class="slds-modal__header">
+
+                            <h2 class="slds-text-heading--medium">Item Issue</h2>
+                            <button class="slds-button slds-modal__close slds-button--icon" title="Close"
+                                onclick="{!c.closeModal}">
+                                <lightning:icon iconName="utility:close" size="medium" />
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                        </div>
+                        <div class="slds-modal__content slds-p-around--large slds-grid slds-wrap "
+                            style="height:600px;">
+                            <h1>Selected Count - {!v.selectedRowsCount}</h1>
+
+                            <table>
+                                <tbody>
+                                    <tr>
+
+                                        <td>
+
+                                            <aura:if isTrue="{!v.showErrorIfNoEmployeeSelected}">
+                                                <div class="slds-text-color_error slds-text-align_left">Please select
+                                                    employee first.
+                                                </div>
+
+                                            </aura:if>
+                                            <br />
+                                            <aura:if isTrue="{!v.showErrorIfEmployeeLimitReached}">
+                                                <div class="slds-text-color_error slds-text-align_left">Employee
+                                                    borrowing Limit reached.
+                                                </div>
+
+                                            </aura:if>
+                                            <br />
+                                            <aura:if isTrue="{!v.showErrorIfQuantityNotIssueable}">
+                                                <div class="slds-text-color_error slds-text-align_left">
+                                                    {!v.errorIfItemNotIssueable}
+                                                </div>
+
+                                            </aura:if>
+                                            <br />
+                                            <aura:if isTrue="{!v.bulkItemError}">
+                                                <div class="slds-text-color_error slds-text-align_left">
+                                                    {!v.bulkItemErrorMsg}
+                                                </div>
+
+                                            </aura:if>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <lightning:datatable columns="{!v.coloumns}"
+                                                data="{!v.wrapperObject.listOfLibraryItemsAvailable}" keyField="Id"
+                                                maxRowSelection="{!v.maxRowSelection}"
+                                                onrowselection="{!c.handleSelection}" />
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <aura:if isTrue="{!v.selectedRowsCount}">
+                                                <lightning:button label="Select Employee"
+                                                    onclick="{!c.searchEmployeeEnable}"></lightning:button>
+                                            </aura:if>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <aura:if isTrue="{!v.showEmployeeSearch}">
+                                                <lightning:input aura:id="SearchEmployeeText" name="searchTermEmployee"
+                                                    label="Enter Name Employee" />
+
+                                                <lightning:button label="Search Employee" onclick="{!c.searchEmployee}">
+                                                </lightning:button>
+                                            </aura:if>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <aura:if isTrue="{!v.showEmployeeSearchResult}">
+
+                                                <lightning:datatable columns="{!v.coloumnsEmployee}"
+                                                    data="{!v.employeeList}" keyField="Id" maxRowSelection="1"
+                                                    onrowselection="{!c.handleSelectionEmployee}" />
+
+                                            </aura:if>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <aura:if isTrue="{!v.showIssueitemButtonOnModal}">
+                                                <lightning:button label="Issue Items" onclick="{!c.issueItems}">
+                                                </lightning:button>
+
+
+                                            </aura:if>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </aura:if>
+            <!--This modal shows the library items for the Browse Library Items button-->
+            <aura:if isTrue="{!v.showListView}">
+                <div aura:id="editDialog" role="dialog" tabindex="-1" aria-labelledby="header43"
+                    class="slds-modal slds-fade-in-open slds-modal_large slds-backdrop ">
+                    <div class="slds-modal__container slds-scrollable_y">
+                        <div class="slds-modal__header">
+
+                            <h2 class="slds-text-heading--small">View Library Items</h2>
+                            <button class="slds-button slds-modal__close slds-button--icon" title="Close"
+                                onclick="{!c.closeModal}">
+                                <lightning:icon iconName="utility:close" size="small" />
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                        </div>
+                        <table>
+                            <thead></thead>
+                            <tbody>
+                                <lightning:button name='Search Records' label="Search Employee"
+                                    onclick="{!c.searchBulkRecords}"></lightning:button>
+
+                                <br />
+                                <lightning:listView aura:id="listViewLibraryItems" objectApiName="Borrowing_History__c"
+                                    listName="All_Library_Items" rows="5" showSearchBar="true" showActionBar="false"
+                                    enableInlineEdit="true" showRowLevelActions="false" />
+                            </tbody>
+                        </table>
+
+
+                    </div>
+
+
+                </div>
+            </aura:if>
+            <!--This modal shows for the button See Employee History-->
+            <aura:if isTrue="{!v.showListViewEmployee}">
+                <div aura:id="editDialog" role="dialog" tabindex="-1" aria-labelledby="header43"
+                    class="slds-modal slds-fade-in-open slds-modal_large slds-backdrop ">
+                    <div class="slds-modal__container ">
+                        <div class="slds-modal__header">
+
+                            <h2 class="slds-text-heading--medium">View Employee History</h2>
+                            <button class="slds-button slds-modal__close slds-button--icon" title="Close"
+                                onclick="{!c.closeModal}">
+                                <lightning:icon iconName="utility:close" size="medium" />
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                        </div>
+                        <div class="slds-modal__content slds-p-around--large slds-grid slds-wrap "
+                            style="height:600px;">
+
+                            <table>
+                                <thead></thead>
+                                <tbody>
+
+                                    <tr>
+
+                                        <td>
+                                            <lightning:input aura:id="SearchEmployeeTextForHistory"
+                                                name="searchTermEmployeeHistory" label="Enter Name Employee" />
+
+                                            <lightning:button label="Search Employee"
+                                                onclick="{!c.searchEmployeeHistory}">
+                                            </lightning:button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <aura:if isTrue="{!v.showEmployeeSearchForHistory}">
+
+                                                <lightning:datatable columns="{!v.coloumnsEmployee}"
+                                                    data="{!v.employeeListForHistory}" keyField="Id" maxRowSelection="1"
+                                                    onrowselection="{!c.handleSelectionEmployeeShowHistory}" />
+
+                                            </aura:if>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <aura:if isTrue="{!v.employeeListForHistoryshowbutton}">
+                                                <lightning:button label="See History" onclick="{!c.seeEmployeeHistory}">
+                                                </lightning:button>
+
+
+                                            </aura:if>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <aura:if isTrue="{!v.showEmployeeHistory}">
+
+                                                <lightning:datatable columns="{!v.coloumnsEmployeeHistory}"
+                                                    data="{!v.historyOfSelectedEmployee}" keyField="Id"
+                                                    hideCheckboxColumn="true" />
+
+                                            </aura:if>
+
+                                            <aura:if isTrue="{!v.showNoEmployeeHistoryFound}">
+
+                                                <div class="slds-text-color_error slds-text-align_left">No Items Found
+                                                </div>
+
+                                            </aura:if>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </aura:if>
+            <!--This modal shows the content for See Borrowing History by items-->
+            <aura:if isTrue="{!v.showBorrowingHistory}">
+                <div aura:id="editDialog" role="dialog" tabindex="-1" aria-labelledby="header43"
+                    class="slds-modal slds-fade-in-open slds-modal_large slds-backdrop ">
+                    <div class="slds-modal__container ">
+                        <div class="slds-modal__header">
+
+                            <h2 class="slds-text-heading--medium">View Library Item History</h2>
+                            <button class="slds-button slds-modal__close slds-button--icon" title="Close"
+                                onclick="{!c.closeModal}">
+                                <lightning:icon iconName="utility:close" size="medium" />
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                        </div>
+                        <div class="slds-modal__content slds-p-around--large slds-grid slds-wrap "
+                            style="height:600px;">
+
+                            <table>
+                                <thead></thead>
+                                <tbody>
+
+                                    <tr>
+
+                                        <td>
+                                            <lightning:input aura:id="searchLibraryItemForHistory"
+                                                name="searchItemHistory" label="Enter Name Of Library Item" />
+
+                                            <lightning:button label="Search Item History"
+                                                onclick="{!c.searchLibrayItemHistory}"></lightning:button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <aura:if isTrue="{!v.showLibraryItemForHistoryFound}">
+
+                                                <lightning:datatable columns="{!v.coloumnsLibraryHistory}"
+                                                    data="{!v.libraryHistoryList}" keyField="Id"
+                                                    hideCheckboxColumn="true" />
+
+                                            </aura:if>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </aura:if>
+            <!--This modal shows the Return Item part.-->
+            <aura:if isTrue="{!v.showReturnBook}">
+                <div aura:id="editDialog" role="dialog" tabindex="-1" aria-labelledby="header43"
+                    class="slds-modal slds-fade-in-open slds-modal_large slds-backdrop ">
+                    <div class="slds-modal__container ">
+                        <div class="slds-modal__header">
+
+                            <h2 class="slds-text-heading--medium">Return Library Items</h2>
+                            <button class="slds-button slds-modal__close slds-button--icon" title="Close"
+                                onclick="{!c.closeModal}">
+                                <lightning:icon iconName="utility:close" size="medium" />
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                        </div>
+                        <div class="slds-modal__content slds-p-around--large slds-grid slds-wrap "
+                            style="height:600px;">
+
+                            <table>
+                                <thead></thead>
+                                <tbody>
+
+                                    <tr>
+
+                                        <td>
+                                            <lightning:datatable columns="{!v.coloumns}"
+                                                data="{!v.wrapperObject.listOfLibraryItemsBorrowed}" keyField="Id"
+                                                hideCheckboxColumn="true" />
+
+                                            <lightning:button label="Return All Items" onclick="{!c.handleReturnBook}">
+                                            </lightning:button>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </aura:if>
+
+        </tbody>
+    </table>
+</aura:component>

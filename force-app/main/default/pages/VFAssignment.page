@@ -1,0 +1,165 @@
+<apex:page standardController="Contact" extensions="VFAssignmentExtension">
+    
+<script type="text/javascript">
+  // Create browser compatible event handler.
+  var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+  var eventer = window[eventMethod];
+  var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+  // Listen for a message from the iframe.
+  eventer(messageEvent, function(e) {
+    if (isNaN(e.data)) return;
+ 
+    // replace #sizetracker with what ever what ever iframe id you need
+    document.getElementById('sizetracker').style.height = e.data + 'px';
+ 
+  }, false);
+</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.3/iframeResizer.min.js"></script>
+    <script>
+    function getProductFamilyDetails(){
+        
+        getProductFamily();
+    }
+    
+    
+    </script>
+    <apex:form >
+        <apex:actionFunction name="getProductFamily" action="{!fetchSelectedProduct}" rerender="Products"/>
+        <apex:actionFunction name="getProductDetail" action="{!getProductDetail}" >
+        	
+        </apex:actionFunction>
+        <apex:actionFunction name="addToCart" action="{!addToCart}" reRender="orderSummary">
+            <apex:param value="" assignTo="{!productInCartId}" name="param1"/>
+        </apex:actionFunction>
+        <apex:actionFunction name="recalculateTotal" action="{!recalculateTotal}" reRender="orderSummary">
+            <apex:param value="" assignTo="{!idToRecalculate}" name="param2"/>
+        </apex:actionFunction>
+        <apex:actionFunction name="placeOrder" action="{!placeOrder}" >
+        	<apex:param value="" assignTo="{!conId}" name="param3" />
+        </apex:actionFunction>
+        <table>
+            <tr>
+                <td> <iframe src="http://go.pardot.com/l/683663/2019-01-02/c5wg81" width="100%" scrolling="yes" id="sizetracker"></iframe></td>
+                <td>
+                    <apex:outputfield value="{!Contact.LastName}"></apex:outputfield>
+                    
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Phone:
+                </td>
+                <td>
+                    <apex:outputfield value="{!Contact.MobilePhone}"></apex:outputfield>
+                </td>
+            </tr>   
+            <tr>
+                <td>
+                    Product Family:
+                </td>
+                <td>
+                    <apex:outputPanel >
+                        <apex:outputPanel >
+                            <apex:selectList size="1"  value="{!selectedProductFamily}" onchange="getProductFamilyDetails();" >
+                                <apex:selectOptions value="{!pickListProductFamilyList}" >
+                                    
+                                    
+                                </apex:selectOptions>
+                            </apex:selectList>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                </td>
+            </tr>  
+            <tr><td>
+                <apex:outputPanel id="Products">
+                    <apex:outputPanel rendered="{!selectedProductFamily != NULL}">
+                        All Products : 
+                        <apex:selectList size="1"  value="{!selectedProduct}" onchange="getProductDetail();">
+                            <apex:selectOptions value="{!productList}">
+                            </apex:selectOptions>
+                        </apex:selectList>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                </td>
+            </tr>
+        </table>
+        <apex:outputpanel id="productDetailsTable">
+            <apex:outputPanel rendered="{!selectedProduct!=NULL}">
+                
+                <table>
+                    <tr>
+                        <th>Name</th>
+
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Add To Cart</th>
+                    </tr>
+                    <apex:repeat value="{!selectedItemDetailsList}" var="item">
+                        <tr>
+                            
+                            
+                            <td>{!item.Name}</td> 
+                            <td>{!item.Family}</td> 
+                            <td>{!item.Price__c}</td> 
+                            <td><apex:commandButton value="Add To Cart" onclick="addToCart('{!item.id}'); return false"/></td> 
+                            
+                        </tr>
+                    </apex:repeat>
+                </table>
+            </apex:outputPanel>
+        </apex:outputpanel>
+        
+        <apex:outputPanel id="orderSummary">
+            <apex:outputPanel rendered="{!cartWrapperList.size > 0}">
+                <table>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    
+                    
+                    <apex:repeat value="{!cartWrapperList}" var="item">
+                        <tr>    
+                            <td><apex:outputText id="name" value="{!item.product.Name}"></apex:outputText></td> 
+                            <td><apex:outputText id="price" value="{!item.product.Price__c}"></apex:outputText></td> 
+                            <td><apex:inputText id="qty" value="{!item.quantity}" onchange="recalculateTotal('{!item.product.id}');"></apex:inputText></td> 
+                            <td><apex:outputText id="totalOfCart" value="{!item.total}"/></td>
+                        </tr>
+                    </apex:repeat>                
+                </table>
+                <table>
+                    <tr>
+                        <td>Total Amount : </td>
+                        <td><apex:outputText value="{!grandTotal}">
+                            
+                            </apex:outputText>
+                        </td>
+                        <td>Total item : </td>
+                        <td><apex:outputText value="{!grandQty}">
+                            
+                            </apex:outputText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{!Contact.Id}
+                        <apex:commandButton value="Place Order" onclick="placeOrder('{!Contact.Id}'); return false">
+                        </apex:commandButton>
+                        </td>
+                    </tr>
+                </table>
+            </apex:outputPanel>
+        </apex:outputPanel>
+       
+        <apex:outputPanel id="orderConfirmation">
+            <apex:outputPanel >
+                <h2>
+                    Order Confirm
+                </h2>
+            </apex:outputPanel>
+        </apex:outputPanel>
+        --------------------------wrapper start------------------------
+        --------------------------wrapper end------------------------
+        
+    </apex:form>
+</apex:page>

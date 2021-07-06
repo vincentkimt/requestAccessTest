@@ -1,0 +1,16 @@
+<apex:page >
+<apex:includeLightning />
+        
+<div id="lightning" />
+$Lightning.use("c:LightningOutDemoApp", function() {
+$Lightning.createComponent("c:AccountList",
+{ 
+"VFpageValue" : "Woohoooo, Lightning Out is an amazing feature of Salesforce Lightning"
+},
+"lightning",
+function(cmp) {
+
+});
+});
+
+</apex:page>

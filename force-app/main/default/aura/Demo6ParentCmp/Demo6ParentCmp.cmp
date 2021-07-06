@@ -1,0 +1,5 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global">
+    <lightning:button variant="brand" label="call child method" name="call child" onclick="{!c.callChild}" />
+    <br/>
+    <c:Demo6ChildCmp aura:id="childCmp"/>
+</aura:component>

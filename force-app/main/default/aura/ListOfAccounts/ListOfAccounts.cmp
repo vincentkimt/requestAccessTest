@@ -1,0 +1,41 @@
+<aura:component controller="ListOfAccountsToDisplay" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global">
+	    <aura:attribute name="accountsList" type="List" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+		This shows Account List
+    <aura:attribute name="retString" type="String"></aura:attribute>
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="slds-text-title_caps" scope="col">
+                                <div class="slds-truncate" title="Entity Name">Account</div>
+                            </th>
+                            
+                        </tr>
+                    </thead>
+    				<tbody>
+        			<aura:iteration items="{!v.accountsList}" var="row" indexVar="rowNum">
+                        
+                        <tr class="slds-hint-parent">
+            				<td>
+                                <div class="slds-truncate">
+                                        {!row.Name}
+                             </div>
+           					 </td>
+                        	<td>
+                            	<div class="slds-truncate">
+                                	 <lightning:button variant="base" aura:id="buttonId" label="Details" title="Details" value="{!row.Id}" onclick="{! c.handleDetails }"/>
+   
+                                </div>
+                            	
+                            </td>
+            			</tr>
+                        
+                        </aura:iteration>
+        			</tbody>
+    
+    </table>
+    <!-- Div to append the child component markup -->
+	<div aura:id="showChildModal" >
+    	returning this  - {!v.retString}
+    </div>
+</aura:component>

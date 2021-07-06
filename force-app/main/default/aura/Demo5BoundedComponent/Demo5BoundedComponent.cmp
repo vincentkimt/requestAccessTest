@@ -1,0 +1,20 @@
+<aura:component >
+    <aura:attribute type="String"  name="parentAttribute" default="Parent Attribute" />
+     <aura:handler name="change" value="{!v.parentAttribute}" action="{!c.parentChangeHandler}"/>
+    
+    <H2>Example of Bounded Expression</H2>
+    <c:Demo7ChildComponent childAttribute="{!v.parentAttribute}" />
+Parent Attribute : {!v.parentAttribute}
+    
+    <lightning:button variant="base" label="update Parent" title="Base action" 
+                     
+                     onclick="{!c.updateParent}" aura:id="LocalID"/>
+    
+    <br/><br/><br/><br/><br/><br/><br/><br/>
+
+	 <aura:iteration items="1,2,3,4,5" var="item">
+        <meter value="{!item / 5}"/><br/>
+    </aura:iteration>
+
+
+</aura:component>

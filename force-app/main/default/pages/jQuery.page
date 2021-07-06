@@ -1,0 +1,106 @@
+<apex:page >
+  <!-- Begin Default Content REMOVE THIS -->
+  <h1>Congratulations</h1>
+  This is your new Page
+  <!-- End Default Content REMOVE THIS -->
+  <apex:includeScript value="{!$Resource.jQuery}"/>
+  
+  <!-- DOING BELOW COMMENT BCZ WE INCLUDE IT USING STATIC RESOURCE ABOVE -->
+  <!--<script
+   src="https://code.jquery.com/jquery-3.3.1.js" 
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>-->
+  
+  <p>
+  This is a paraghraph..
+  This is a paraghraph..
+  This is a paraghraph..
+  This is a paraghraph..
+  This is a paraghraph..
+  This is a paraghraph..
+  </p>
+  
+  <p id="mypara">
+  
+  
+ 
+  </p>
+  
+  <button value="get HTML" onclick="getHTML()"> get</button>
+  
+  <button value="set HTML" onclick="setHTML()"> set </button>
+  
+  
+  
+  <button value="Show para" id="showpara" onclick="showpara()"> Show </button>
+   
+  <button value="Hide para" id="hidepara"> Hide </button>
+  
+  <a href="https://www.google.com" target="_blank">Demo</a>
+  
+  <p class="myparagraph">para</p>
+  <button onclick="showAfterBefore();" value="After Before" > BeforeAfter </button>
+
+    <input type="text" class="myInput" />
+    <input type="button" value="Submit" onclick="showError();" />
+    <p id="errorId"> </p>
+  
+  
+  <script>
+  var jq=$.noConflict();
+  
+  alert(jq("a").attr("href"));
+  
+  function showError(){
+ 
+  if(jq(".myInput").val()==""){
+   alert("an alert");
+  jq("#errorId").after("<span id='error'> please enter something</span>");
+      }
+  }
+  
+  function showAfterBefore(){
+  jq(".myparagraph").after("</br><b> Added after");
+  jq(".myparagraph").before("</br><b> Added before");
+  
+  }
+  var count=0;
+  
+  function setHTML(){
+  count++;
+  
+   jq("#mypara").html("Button clicked  " + count + "times")
+  }
+  
+  function getHTML(){
+  
+  alert(jq("#mypara").html());
+  
+ 
+  }
+
+  
+
+  
+  jq(document).ready(function(){
+  
+  alert("The page is loaded!");
+  
+  jq("#hidepara").click(function(){
+  
+      jq("p").hide();
+  
+  });
+  });
+  
+  function showpara(){
+  jq("p").show();
+  }
+  jq("p").click(function(){
+  
+  alert("your paraghraph is clicked");
+  });
+  
+  
+  </script>
+</apex:page>

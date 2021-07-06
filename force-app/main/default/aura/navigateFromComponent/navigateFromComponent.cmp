@@ -1,0 +1,9 @@
+<!--Component1-->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" >
+    <aura:dependency resource="markup://force:navigateToComponent" type="EVENT"/>
+
+    <div>
+        Component 1   
+    </div>     
+    <lightning:button variant="brand" label="Navigate to Component 2" onclick="{!c.navigate}" /> 
+</aura:component>

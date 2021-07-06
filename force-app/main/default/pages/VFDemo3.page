@@ -1,0 +1,19 @@
+<apex:page standardController="Account" extensions="VFDemo3Extension">
+<apex:form >
+    {!message}
+	<table border='1'>
+        <tr>
+        	<td>Account Name</td>
+            <td><apex:inputField value="{!Account.Name}"/> </td>
+        </tr>
+        <tr>
+        	<td>Rating</td>
+            <td><apex:outputField value="{!Account.Rating}"/></td>
+        </tr>
+        <tr>
+        	<td><apex:commandButton value="Save" action="{!save}"/></td>
+            <td><apex:commandButton value="Cancel" immediate="true" action="{!myCancel}" /></td><!-- Give your custom cancel method Name in apex here. -->
+        </tr>
+    </table>    
+</apex:form>
+</apex:page>
