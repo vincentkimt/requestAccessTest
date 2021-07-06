@@ -17,6 +17,7 @@ public with sharing class AccountsController {
   @AuraEnabled(cacheable = true)
   public static List <Account> getAccountsToLWC() {
     return [SELECT Id, Name,Website FROM Account LIMIT 10];
+    //adding this comment
   }
 
 }
