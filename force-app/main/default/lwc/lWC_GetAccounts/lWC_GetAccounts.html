@@ -13,27 +13,19 @@
     <lightning-button label="Get Accounts" onclick={handleGetAccount}></lightning-button>
     
    
-           
-                    <template  for:each={accountList} for:item="account">
-                        <div key={account.id} class="slds-grid slds-wrap">
-                            <div>
-                            <lightning-card  variant="Narrow"  title={account.Name} icon-name="standard:account">
-                                
-                                <div class="slds-var-p-horizontal_small">
-                                    Industry : {account.Industry}<br/>
-                                    Rating : {account.Rating}<br/>
-                                    Website : {account.Website}<br/>
-                                    Revenue : {account.AnnualRevenue}
-                                </div>
-                            </lightning-card>
+    <div class="slds-grid slds-wrap">
+                    <template  for:each={accountList} for:item="acc">
                         
-
-                            </div>
+                        <div class="slds-size_1-of-3" key={acc.id}>
+                            <c-childdisplay key={acc.Id} accountrec={acc} index={acc.index}> </c-childdisplay>
                         </div>
+
+                            
+                       
                     </template>
-            </div>
-                
             
+                
+            </div>
     
 </div>
 </template>
