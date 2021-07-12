@@ -22,6 +22,7 @@ export default class LWC_GetAccounts extends LightningElement {
     }
 
     handleGetAccount(event){
+        
         getAccounts()
         .then(result=>{
             this.accountList=result;
@@ -34,8 +35,7 @@ export default class LWC_GetAccounts extends LightningElement {
     }
 
 
-
-
+  
 
 
 }

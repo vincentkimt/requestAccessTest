@@ -12,12 +12,12 @@
     <div>
     <lightning-button label="Get Accounts" onclick={handleGetAccount}></lightning-button>
     
-   
     <div class="slds-grid slds-wrap">
                     <template  for:each={accountList} for:item="acc">
                         
                         <div class="slds-size_1-of-3" key={acc.id}>
                             <c-childdisplay key={acc.Id} accountrec={acc} index={acc.index}> </c-childdisplay>
+                            
                         </div>
 
                             
