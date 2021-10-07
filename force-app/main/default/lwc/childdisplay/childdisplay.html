@@ -4,7 +4,7 @@
     <div class="cardShadow">
 
         <lightning-card variant="Narrow"  title={accountrec.Name} icon-name="standard:account">
-            <div class="slds-p-horizontal_small">
+            <div class="slds-var-p-horizontal_small">
                 
             
                 Industry : {accountrec.Industry}<br/>
@@ -14,12 +14,65 @@
             
             </div>
         </lightning-card>
-
-        
+        <lightning-button icon-name="utility:update" label="Update" variant="brand" onclick={showModal}>  
+        </lightning-button> 
+        <lightning-button icon-name="utility:update" label="Go To This Record" variant="brand" onclick={navigateToAccount}>  
+        </lightning-button> 
     </div>
 
 
         
-   
+    <div class="slds-box slds-theme_shade">  
+       
+      </div>  
+      <template if:true={openModal}>  
+        <div class="slds-modal slds-fade-in-open slds-backdrop">  
+          <div class="slds-modal__container">  
+            <!------HEADER Section-->  
+            <div class="slds-modal__header">  
+              <lightning-button-icon icon-name="utility:close" alternative-text="Close this window" size="large"  
+                variant="bare-inverse" onclick={closeModal} class="slds-modal__close">  
+              </lightning-button-icon>  
+              <h2>Update Account Details</h2>  
+            </div>  
+            <!------Body Section-->  
+            <div class="slds-modal__content slds-var-p-around_medium">  
+                <lightning-input type="text" label="Updating Account" value={accountrec.Name} readonly></lightning-input>
+            <lightning-input
+                label="Industry"
+                value={accountrec.Industry}
+                onchange={handleChangeIndustry}
+            ></lightning-input>
+            <br/>
+            <lightning-input
+                label="Website"
+                value={accountrec.Website}
+                onchange={handleChangeWebsite}
+            ></lightning-input>
+            <br/>
+            <lightning-input
+                label="Rating"
+                value={accountrec.Rating}
+                onchange={handleChangeRating}
+            ></lightning-input>
+            <br/>
+            <lightning-input
+                label="Revenue"
+                value={accountrec.AnnualRevenue}
+                onchange={handleChangeRevenue}
+            ></lightning-input>
+            <br/>
+            
+            </div>  
+            <!------Footer Section-->  
+            <div class="slds-modal__footer">  
+              <lightning-button icon-name="utility:update" label="Update" variant="brand" onclick={sendEvent}>  
+              </lightning-button>  
+              
+            </div>  
+          </div>  
+        </div>  
+      </template>  
+
 </template>
 </template>

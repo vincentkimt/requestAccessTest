@@ -1,0 +1,17 @@
+<template>
+    <lightning-card title="Upload File">
+        <div class="slds-var-m-around_medium"> 
+            <lightning-input name="file1" 
+            type="file" 
+            label="Attachment" 
+            multiple="true" 
+            accept=".pdf, .xls, .xlsx, .doc" onchange={handleFileUpload}></lightning-input>
+        </div>
+        <template if:true={fileData}>
+            File Uploaded : {fileData.filename}
+        </template>
+        <lightning-button variant="brand" label="Submit" title="Submit" onclick={handleSubmit} >
+
+        </lightning-button>
+    </lightning-card>
+</template>

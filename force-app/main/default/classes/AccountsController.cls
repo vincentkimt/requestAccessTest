@@ -10,7 +10,7 @@ public with sharing class AccountsController {
 
   @AuraEnabled
   public static List <Account> getAccounts() {
-    return [SELECT Id, name, industry, Type, NumberOfEmployees, TickerSymbol, Phone,Website,AnnualRevenue FROM Account Where Industry <> '' AND Website <> '' AND Rating <> '' AND AnnualRevenue <> null LIMIT 10];
+    return [SELECT Id, name, industry, Type, NumberOfEmployees, TickerSymbol, Phone,Website,AnnualRevenue,Rating FROM Account Where Industry <> '' AND Website <> '' AND Rating <> '' AND AnnualRevenue <> null LIMIT 10];
   }
  
   
@@ -20,12 +20,20 @@ public with sharing class AccountsController {
   }
 
 
+
   @AuraEnabled
-  public static Contact getContact(Account acc){
+  public static String saveAccountToSF(String id,String Industry,String Rating,String website,decimal revenue){
     try {
-      return [SELECT Id, Name FROM Contact Where AccountId=:acc.Id LIMIT 1];
+      Account acc=[Select id,Industry,Rating,Website,AnnualRevenue from Account where Id=:id];
+      acc.Industry=Industry;
+      acc.Rating=Rating;
+      acc.website=website;
+      acc.AnnualRevenue= revenue;
+
+      update acc;
+      return 'success';
     } catch (Exception e) {
-      
+      System.debug(Logginglevel.ERROR, e.getMessage());
       throw new AuraHandledException(e.getMessage());
     }
   }

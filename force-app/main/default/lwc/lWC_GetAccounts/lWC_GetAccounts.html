@@ -16,7 +16,7 @@
                     <template  for:each={accountList} for:item="acc">
                         
                         <div class="slds-size_1-of-3" key={acc.id}>
-                            <c-childdisplay key={acc.Id} accountrec={acc} index={acc.index}> </c-childdisplay>
+                            <c-childdisplay key={acc.Id} accountrec={acc} index={acc.index} onsaveaccount={saveAccountDetails}> </c-childdisplay>
                             
                         </div>
 
@@ -25,7 +25,7 @@
                     </template>
             
                 
-            </div>
+    </div>
     
 </div>
 </template>
