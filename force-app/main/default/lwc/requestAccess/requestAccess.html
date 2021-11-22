@@ -1,0 +1,125 @@
+
+
+<!-- Optout Form -->
+<template>
+    <form>
+
+        <div class="slds-text-heading_large slds-align_absolute-center">Customer Enrolment Form </div>
+       
+        <div class="slds-align_absolute-center">
+
+            <div class="slds-grid slds-grid_vertical" style="width: 50%">
+                <div class="slds-col" >
+                    <lightning-input class="slds-p-around_small" label="Company Name" value={companyName} required="true" onchange={handleChangeCompanyName}></lightning-input>
+                </div>
+
+                <div class="slds-col">
+                    <lightning-combobox
+                    class="slds-p-around_small" 
+                    name="Country"
+                    label="Country"
+                    value={country}
+                    placeholder="Select Country"
+                    options={optionsCountry}
+                    required="true"
+                    onchange={handleChangeCountry}></lightning-combobox>
+                </div>
+
+                <div class="slds-col">
+                    <lightning-textarea class="slds-p-around_small" label="Company Address"  value={companyAddress} onchange={handleChangeCompanyAddress}></lightning-textarea>
+                </div>
+
+                <div class="slds-col">
+                    <lightning-input class="slds-p-around_small" label="Company ZipCode" value={companyZipCode} required="true" onchange={handleChangeCompanyZipCode}></lightning-input>
+                </div>
+
+                <div class="slds-col">
+                    <lightning-input class="slds-p-around_small" label="Company City" value={companyCity} required="false" onchange={handleChangeCompanyCity}></lightning-input>
+                </div>
+
+                <div class="slds-col">
+                    <lightning-combobox
+                    class="slds-p-around_small" 
+                    name="Region"
+                    label="Region"
+                    value={region}
+                    placeholder="Select Region"
+                    options={optionsRegion}
+                    required="true"
+                    onchange={handleChangeRegion}></lightning-combobox>
+                </div>
+                <div class="slds-col">
+                    <lightning-input label="Enter the email" class="email slds-p-around_small" onblur={handleChangeCompanyEmail}>
+                    </lightning-input>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col" >
+                        <lightning-input class="vatnumberclass slds-p-around_medium" placeholder="10 digits" label="VAT Number" value={vatNumber}  minlength = "5" required="true"  onblur={verifyVATNumber}></lightning-input>
+                        
+                    </div>
+                    <div class="slds-col"  style="padding-left: 0px; padding-block-start: 0px;">
+                        <br/>
+                        <br/>
+                        <lightning-icon icon-name="utility:success"  if:true={enableSubmitButton} alternative-text="VAT Number Verified!" variant="success"
+                        title="success variant medium" size="medium"></lightning-icon>
+                        <lightning-icon icon-name="utility:error"  if:true={showErroricon} alternative-text="VAT Number Not Verified!" variant="error"
+                        title="success variant medium" size="medium"></lightning-icon>
+                        <div class="slds-m-around_medium">
+                            <div if:true={isLoaded} class="slds-is-relative">
+                                <lightning-spinner class="slds-m-around_medium"
+                                    alternative-text="Verifying..." variant="brand">
+                                    
+                                </lightning-spinner>
+                                
+                            </div>
+                       </div>
+                    </div>
+                  </div>
+                     
+            </div>
+        </div>
+
+        
+        <template if:true={enableSubmitButton}>
+            <div class="slds-text-align_center slds-text-body_regular slds-p-around_medium">
+                    <div class="slds-text-align_center slds-text-body_regular slds-p-around_medium" style="color: green;">VAT Details Verified Successfully
+                        <template for:each={mapData} for:item="keyValue">
+                            <p key={keyValue.key}>  
+                                <b>{keyValue.key}</b>
+                                <br/>
+                                {keyValue.value}
+                            </p>
+                                  
+                                
+                            
+                        
+                        </template>
+                    </div>
+            </div>
+        </template>
+        
+        <template if:true={showErrorMessage}>
+            <div class="slds-text-align_center slds-text-body_regular slds-p-around_medium">
+    
+                <div style="color:red;">Invalid VAT Number</div>
+    
+            </div>
+        </template>
+        <template if:true={mandatoryFields}>
+            <div class="slds-text-align_center slds-text-body_regular slds-p-around_medium">
+    
+                <div style="color:red;">Please enter required fields.</div> 
+    
+            </div>
+        </template>
+        <template if:true={enableSubmitButton}>
+        <div class="slds-text-align_center slds-text-body_regular slds-p-around_medium">
+
+          <lightning-button id="btn1" label="Submit" variant="Brand" onclick={submitForm}>
+            </lightning-button>
+
+        </div>
+    </template>
+
+</form>
+</template>
